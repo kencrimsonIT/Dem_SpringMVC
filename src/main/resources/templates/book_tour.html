@@ -16,7 +16,7 @@
         </div>
 
         <div class="card">
-            <form th:action="@{/bookTour}" method="post">
+            <form th:action="@{/book_tour}" method="post">
                 <!-- Hidden: ID tour -->
                 <input type="hidden" name="tourId" th:value="${tour.id}"/>
 
@@ -78,7 +78,7 @@
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Gửi</button>
                     <button type="button" class="btn btn-danger"
-                            onclick="window.location='/listTours'">Hủy</button>
+                            onclick="window.location='/list_tour'">Hủy</button>
                 </div>
             </form>
         </div>

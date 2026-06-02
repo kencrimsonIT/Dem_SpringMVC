@@ -25,7 +25,7 @@
                 <tr th:each="tour : ${tours}">
                     <td>
                         <a class="tour-name"
-                           th:href="@{/tourDetails/{id}(id=${tour.id})}"
+                           th:href="@{/tour_detail/{id}(id=${tour.id})}"
                            th:text="${tour.description}">Tên tour</a>
                         <div class="tour-days" th:text="${tour.days}">N ngày M đêm</div>
                     </td>
@@ -36,7 +36,7 @@
                     </td>
                     <td>
                         <a class="btn btn-gold"
-                           th:href="@{/bookTour/{id}(id=${tour.id})}">Đặt tour</a>
+                           th:href="@{/book_tour/{id}(id=${tour.id})}">Đặt tour</a>
                     </td>
                 </tr>
                 </tbody>
