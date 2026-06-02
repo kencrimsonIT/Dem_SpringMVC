@@ -3,8 +3,12 @@ package com.example.touring.service;
 import com.example.touring.model.Booking;
 import com.example.touring.model.Customer;
 import com.example.touring.model.Tour;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +17,8 @@ public class TourService {
     private static final List<Tour> tours = new ArrayList<>();
     private static final List<Customer> customers = new ArrayList<>();
     private static final List<Booking> bookings = new ArrayList<>();
+    private final ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    private static final String JSON_FILE_PATH = "src/main/resources/static/data/bookings.json";
 
 
     //Mockup Data
@@ -83,5 +89,31 @@ public class TourService {
     public void saveBooking(Booking booking) {
         booking.setId((long) (bookings.size() + 1)); //Auto generate ID
         bookings.add(booking);
+        saveBookingToJson(booking);
+    }
+
+    private void saveBookingToJson(Booking booking) {
+        try {
+            List<Booking> allBookings = new ArrayList<>();
+            File file = new File(JSON_FILE_PATH);
+
+            if (file.exists() && file.length() > 0) {
+                // Read existing bookings
+                allBookings = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Booking.class));
+            } else {
+                // Ensure parent directory exists
+                File parent = file.getParentFile();
+                if (parent != null && !parent.exists()) {
+                    parent.mkdirs();
+                }
+            }
+
+            allBookings.add(booking);
+
+            // Write back to file
+            objectMapper.writeValue(file, allBookings);
+        } catch (IOException e) {
+            System.err.println("Error saving booking to JSON: " + e.getMessage());
+        }
     }
 }

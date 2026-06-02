@@ -1,0 +1,21 @@
+[ {
+  "id" : 1,
+  "customer" : {
+    "id" : 1,
+    "name" : "Nguyễn Thành Văn",
+    "address" : "123 Đinh Tiên Hoàng, Bến Ghé, TPHCM",
+    "email" : "alex@fmail.com",
+    "phone" : "0123456789"
+  },
+  "departureDate" : 991328400000,
+  "noAdults" : 1,
+  "noChildren" : 0,
+  "tour" : {
+    "id" : 3,
+    "description" : "CÔN ĐẢO",
+    "days" : "3 ngày 2 đêm",
+    "transportation" : "Máy bay",
+    "departureSchedule" : "Hằng ngày",
+    "price" : 1345000.0
+  }
+} ]
