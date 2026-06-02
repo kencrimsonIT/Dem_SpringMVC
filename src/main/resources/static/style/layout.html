@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(title, content)">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:replace="${title}">Đặt Tour</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <style>
+        /* ── RESET & BASE ───────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --sand:      #f5f0e8;
+            --cream:     #fdfaf5;
+            --teal:      #1a6b6b;
+            --teal-dark: #124f4f;
+            --teal-light:#e8f4f4;
+            --gold:      #c8973a;
+            --gold-light:#fdf3e0;
+            --ink:       #1c1c1c;
+            --muted:     #7a7a7a;
+            --border:    #ddd8ce;
+            --red:       #c0392b;
+            --radius:    10px;
+            --shadow:    0 4px 24px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--sand);
+            color: var(--ink);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── NAVBAR ─────────────────────────────────── */
+        nav {
+            background: var(--teal);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+
+        nav .brand {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+        }
+
+        nav .brand span {
+            color: var(--gold);
+        }
+
+        nav .nav-link {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            padding: 0.4rem 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        nav .nav-link:hover {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+
+        /* ── MAIN WRAPPER ───────────────────────────── */
+        main {
+            flex: 1;
+            max-width: 1000px;
+            width: 100%;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ── PAGE HEADER ────────────────────────────── */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--teal-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .page-header .subtitle {
+            color: var(--muted);
+            font-size: 0.875rem;
+        }
+
+        /* ── CARD ───────────────────────────────────── */
+        .card {
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        /* ── TABLE ──────────────────────────────────── */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead tr {
+            background: var(--teal);
+            color: #fff;
+        }
+
+        thead th {
+            padding: 0.85rem 1rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            text-align: left;
+        }
+
+        thead th:last-child { text-align: center; }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+
+        tbody tr:hover { background: var(--teal-light); }
+
+        tbody td {
+            padding: 0.85rem 1rem;
+            vertical-align: top;
+        }
+
+        tbody td:last-child { text-align: center; }
+
+        .tour-name {
+            font-weight: 500;
+            color: var(--teal);
+            text-decoration: none;
+        }
+
+        .tour-name:hover { color: var(--teal-dark); text-decoration: underline; }
+
+        .tour-days {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .price {
+            font-weight: 600;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        /* ── BUTTONS ────────────────────────────────── */
+        .btn {
+            display: inline-block;
+            padding: 0.45rem 1.1rem;
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--teal);
+            color: #fff;
+        }
+
+        .btn-primary:hover { background: var(--teal-dark); }
+
+        .btn-gold {
+            background: var(--gold);
+            color: #fff;
+            font-size: 0.8rem;
+            padding: 0.35rem 0.9rem;
+        }
+
+        .btn-gold:hover { background: #b5862e; }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--teal);
+            border: 1.5px solid var(--teal);
+        }
+
+        .btn-outline:hover { background: var(--teal-light); }
+
+        .btn-danger {
+            background: transparent;
+            color: var(--red);
+            border: 1.5px solid var(--red);
+        }
+
+        .btn-danger:hover { background: #fdf0ef; }
+
+        /* ── FORM ───────────────────────────────────── */
+        .form-section {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            color: var(--teal-dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--teal-light);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .form-row label {
+            font-size: 0.875rem;
+            color: var(--ink);
+        }
+
+        .form-row label .required {
+            color: var(--red);
+            margin-left: 2px;
+        }
+
+        .form-row input {
+            padding: 0.55rem 0.9rem;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            background: #fff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            max-width: 320px;
+            width: 100%;
+        }
+
+        .form-row input:focus {
+            outline: none;
+            border-color: var(--teal);
+            box-shadow: 0 0 0 3px rgba(26,107,107,0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── DETAIL GRID ────────────────────────────── */
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 0.6rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .detail-grid .label {
+            color: var(--muted);
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-top: 2px;
+        }
+
+        .detail-grid .value { color: var(--ink); }
+
+        /* ── CONFIRM BLOCK ──────────────────────────── */
+        .confirm-section {
+            background: var(--teal-light);
+            border: 1px solid #b8dada;
+            border-radius: var(--radius);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .confirm-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: var(--teal-dark);
+            margin-bottom: 0.9rem;
+        }
+
+        .confirm-row {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 0.4rem 1rem;
+            font-size: 0.875rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .confirm-row .lbl { color: var(--muted); }
+        .confirm-row .val { font-weight: 500; }
+
+        /* ── SUCCESS BADGE ──────────────────────────── */
+        .success-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #e8f7ee;
+            color: #1e7e45;
+            border: 1px solid #b8e0c8;
+            border-radius: 20px;
+            padding: 0.3rem 1rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            margin-bottom: 1.2rem;
+        }
+
+        /* ── FOOTER ─────────────────────────────────── */
+        footer {
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 0.78rem;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            background: var(--cream);
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a class="brand" th:href="@{/list_tour.html}">✈ Tour<span>Việt</span></a>
+    <a class="nav-link" th:href="@{/list_tour.html}">Chương trình tour</a>
+</nav>
+
+<main th:replace="${content}"></main>
+
+<footer>© 2025 TourViệt — Khám phá Việt Nam cùng chúng tôi</footer>
+</body>
+</html>

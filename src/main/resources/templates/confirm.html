@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <title>Xác nhận đặt tour</title>
+</head>
+<body>
+    <main>
+        <div class="page-header">
+            <h1>Xác nhận đặt tour</h1>
+            <p class="subtitle">Vui lòng kiểm tra lại thông tin trước khi xác nhận</p>
+        </div>
+
+        <div class="success-badge">
+            ✓ Yêu cầu đặt tour đã được ghi nhận
+        </div>
+
+        <!-- ── Thông tin tour ── -->
+        <div class="confirm-section">
+            <h3>Thông tin tour</h3>
+            <div class="confirm-row">
+                <span class="lbl">Tên tour</span>
+                <span class="val" th:text="${booking.tour.description}">—</span>
+            </div>
+            <div class="confirm-row">
+                <span class="lbl">Số ngày</span>
+                <span class="val" th:text="${booking.tour.days}">—</span>
+            </div>
+            <div class="confirm-row">
+                <span class="lbl">Phương tiện</span>
+                <span class="val" th:text="${booking.tour.transportation}">—</span>
+            </div>
+            <div class="confirm-row">
+                <span class="lbl">Lịch khởi hành</span>
+                <span class="val" th:text="${booking.tour.departureSchedule}">—</span>
+            </div>
+            <div class="confirm-row">
+                <span class="lbl">Giá / người</span>
+                <span class="val" style="color: var(--gold); font-weight:600;">
+                    <span th:text="${#numbers.formatInteger(booking.tour.price, 1, 'COMMA')}">0</span>
+                    VNĐ
+                </span>
+            </div>
+        </div>
+
+        <!-- ── Thông tin khách hàng ── -->
+        <div class="confirm-section">
+            <h3>Thông tin khách hàng</h3>
+            <div class="confirm-row">
+                <span class="lbl">Họ tên</span>
+                <span class="val" th:text="${customer.name}">—</span>
+            </div>
+            <div class="confirm-row">
+                <span class="lbl">Địa chỉ</span>
+                <span class="val" th:text="${customer.address ?: '—'}">—</span>
+            </div>
+            <div class="confirm-row">
+                <span class="lbl">E-mail</span>
+                <span class="val" th:text="${customer.email}">—</span>
+            </div>
+            <div class="confirm-row">
+                <span class="lbl">Điện thoại</span>
+                <span class="val" th:text="${customer.phone ?: '—'}">—</span>
+            </div>
+        </div>
+
+        <!-- ── Thông tin chuyến đi ── -->
+        <div class="confirm-section">
+            <h3>Thông tin chuyến đi</h3>
+            <div class="confirm-row">
+                <span class="lbl">Ngày khởi hành</span>
+                <span class="val"
+                      th:text="${#dates.format(booking.departureDate, 'dd/MM/yyyy')}">—</span>
+            </div>
+            <div class="confirm-row">
+                <span class="lbl">Số người lớn</span>
+                <span class="val" th:text="${booking.noAdults}">—</span>
+            </div>
+            <div class="confirm-row">
+                <span class="lbl">Số trẻ em</span>
+                <span class="val" th:text="${booking.noChildren}">—</span>
+            </div>
+            <div class="confirm-row">
+                <span class="lbl">Tổng người</span>
+                <span class="val"
+                      th:text="${booking.noAdults + booking.noChildren} + ' người'">—</span>
+            </div>
+        </div>
+
+        <!-- ── Actions ── -->
+        <div class="form-actions">
+            <a class="btn btn-outline" th:href="@{/listTours}">← Về trang tour</a>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <title th:text="'Đặt tour: ' + ${tour.description}">Đặt tour</title>
+</head>
+<body>
+    <main>
+        <div class="page-header">
+            <h1>Đặt tour</h1>
+            <p class="subtitle">
+                <span th:text="${tour.description}">Tên tour</span>
+                &nbsp;—&nbsp;
+                <span th:text="${tour.days}">N ngày M đêm</span>
+            </p>
+        </div>
+
+        <div class="card">
+            <form th:action="@{/bookTour}" method="post">
+                <!-- Hidden: ID tour -->
+                <input type="hidden" name="tourId" th:value="${tour.id}"/>
+
+                <!-- ── Thông tin khách hàng ── -->
+                <div class="form-section">
+                    <p class="form-section-title">Thông tin khách hàng</p>
+
+                    <div class="form-row">
+                        <label>Họ tên <span class="required">*</span></label>
+                        <input type="text" name="name" placeholder="Nguyễn Văn A" required/>
+                    </div>
+
+                    <div class="form-row">
+                        <label>Địa chỉ</label>
+                        <input type="text" name="address" placeholder="Số nhà, đường, quận..."/>
+                    </div>
+
+                    <div class="form-row">
+                        <label>E-mail <span class="required">*</span></label>
+                        <input type="email" name="email" placeholder="example@email.com" required/>
+                    </div>
+
+                    <div class="form-row">
+                        <label>Điện thoại</label>
+                        <input type="text" name="phone" placeholder="0909 xxx xxx"/>
+                    </div>
+                </div>
+
+                <!-- ── Thông tin chuyến đi ── -->
+                <div class="form-section">
+                    <p class="form-section-title">Thông tin chuyến đi</p>
+
+                    <div class="form-row">
+                        <label>Ngày khởi hành <span class="required">*</span></label>
+                        <input type="text"
+                               name="departureDate"
+                               placeholder="dd/MM/yyyy"
+                               pattern="\d{2}/\d{2}/\d{4}"
+                               title="Nhập theo định dạng dd/MM/yyyy"
+                               required/>
+                    </div>
+
+                    <div class="form-row">
+                        <label>Số người lớn <span class="required">*</span></label>
+                        <input type="number" name="noAdults"
+                               min="1" value="1" required
+                               style="max-width: 100px;"/>
+                    </div>
+
+                    <div class="form-row">
+                        <label>Số trẻ em</label>
+                        <input type="number" name="noChildren"
+                               min="0" value="0"
+                               style="max-width: 100px;"/>
+                    </div>
+                </div>
+
+                <!-- ── Actions ── -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Gửi</button>
+                    <button type="button" class="btn btn-danger"
+                            onclick="window.location='/listTours'">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

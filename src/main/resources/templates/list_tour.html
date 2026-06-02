@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::main})}">
+<head>
+    <title>Chương trình Du lịch</title>
+</head>
+<body>
+    <main>
+        <div class="page-header">
+            <h1>Các Chương trình Du lịch</h1>
+            <p class="subtitle">Chọn một chương trình tour phù hợp với bạn</p>
+        </div>
+
+        <div class="card" style="padding: 0; overflow: hidden;">
+            <table>
+                <thead>
+                <tr>
+                    <th>Chương trình</th>
+                    <th>Lịch khởi hành</th>
+                    <th>Giá (VNĐ)</th>
+                    <th>Đặt</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="tour : ${tours}">
+                    <td>
+                        <a class="tour-name"
+                           th:href="@{/tourDetails/{id}(id=${tour.id})}"
+                           th:text="${tour.description}">Tên tour</a>
+                        <div class="tour-days" th:text="${tour.days}">N ngày M đêm</div>
+                    </td>
+                    <td th:text="${tour.departureSchedule}">Hằng ngày</td>
+                    <td class="price"
+                        th:text="${#numbers.formatInteger(tour.price, 1, 'COMMA')}">
+                        0
+                    </td>
+                    <td>
+                        <a class="btn btn-gold"
+                           th:href="@{/bookTour/{id}(id=${tour.id})}">Đặt tour</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
